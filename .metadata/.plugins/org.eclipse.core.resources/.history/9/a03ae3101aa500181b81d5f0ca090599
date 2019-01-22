@@ -1,0 +1,27 @@
+package oop;
+
+class A {
+	int a = 1;
+}
+class B extends A {
+	int a = 5;
+	int b = 10;
+}
+class C extends A {
+	int a = 7;
+	int c = 8;
+}
+class D {
+	public static void main(String[] args) {
+		A a = new A();
+		B b = new B();
+		C c = new C();
+	
+		//	b = c;
+		Object o = a;
+//		b = (B) a;
+		a = c;
+		System.out.println("hh");
+		}
+}
+

@@ -1,0 +1,64 @@
+package ex;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class Ex12 {
+	public static void main(String[] args) {
+		Connection conn = null;
+		Statement stmt = null;
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String sql = "SELECT * FROM movies ";
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			conn = DriverManager.getConnection(url, "test", "1111");
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				int cnt = 0;
+				
+				for(int i=0; i<25; i++) {
+					System.out.printf(rs.getInt(1)+") "+rs.getString(2)+"  ");
+					cnt++;
+					if(cnt%4==0)
+						System.out.println();
+				}
+			}
+			System.out.println("\n삭제할 영화번호는? ");
+			String deleteMovieNumber = sc.nextLine();
+			String sql2 = "DELETE FROM movies where no = '"+deleteMovieNumber+"'";
+			// 삭제할 영화 번호를 입력받는 구문이다. 해당 번호를 입력받으면 delete from 을 사용하여 해당되는 영화 번호의
+			// 영화를 삭제합니다.
+			
+			// 삭제할 영화가 존해자는 result 가 만약 0 이 아닐시에는 삭제가 되었다는 구문, 
+			// 영화가 만약 존재하지 않는다면 , 삭제되지 않았다는 구문을 출력합니다.
+			int result = stmt.executeUpdate(sql2);
+			if (result==0) {
+				System.out.println("삭제되지 않았습니다.");
+			}else {
+				System.out.println(result+"개의 영화가 삭제되었습니다.");
+			} // if~else end
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt!=null)
+					stmt.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}// try~catch end
+			try {
+				if(conn!=null)
+					conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			} // try~catch end
+		} // try~catch~finally end
+		
+	}// main() end
+} // Ex12 end

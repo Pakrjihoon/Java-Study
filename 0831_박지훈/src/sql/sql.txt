@@ -1,0 +1,39 @@
+SQL 
+
+1번 - PASS 
+2번 - PASS 
+
+
+-------------------------------------------------------------------------------------------
+
+3번
+
+select no as "번호", name "장르" from genres 
+
+-------------------------------------------------------------------------------------------
+4번
+
+select m.no 번호, m.name 영화명, to_char(release_date,'mm/dd/yyyy') 개봉일, director 감독, 
+to_char(audience_num,'999,999,999')||'명' 관객수, g.name 장르 
+from movies m, genres g
+where genre = g.no 
+and end_date is null order by 5 desc;
+
+--------------------------------------------------------------------------------------------
+5번
+
+select g.name 장르명, to_char(avg(m.audience_num),'999,999,999')||'명' 평균관객수, 
+count(*)||'개' 영화갯수
+from movies m, genres g
+where g.no = m.genre
+group by g.name order by 2 desc;
+
+--------------------------------------------------------------------------------------------
+6번
+
+select name 영화명, ceil(nvl(end_date,sysdate)-release_date)||'일' 개봉일수, 
+to_char(audience_num/(ceil(nvl(end_date,sysdate)-release_date)),'999,999,999')||'명' "하루평균 관객수"
+from movies
+order by 3 desc;
+
+

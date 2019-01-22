@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="idols">
+  	
+  	<!-- SQL구문에 넣어주는 자료형 -->
+  	<delete id="delete" parameterType="int">
+  		DELETE idols
+  		where idol_id = #{idolID}
+  		<!-- #{} 는 변수처럼 작용 -->
+  	</delete>
+  	<insert id="insert" parameterType="vo.Idol">
+  	INSERT INTO idols(idol_id,name,height,weight,birth_date,agent_name,gender,group_id)
+	VALUES(idols_seq.nextval,#{name},#{height},#{weight},#{birthDate},#{agentName},#{gender},#{groupId})
+  	</insert>
+  
+  
+  </mapper>

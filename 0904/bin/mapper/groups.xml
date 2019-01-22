@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="groups">
+	
+	<!-- 값을 두개이상 넘길시 그 값들을 넣을 공간이 필요(VO)
+		VO를 먼저 만들어준 후 파라미터타입에는 VO를 넣어주면된다. -->
+	<insert id="insert" parameterType="vo.Group">
+		INSERT INTO groups(group_id, name, debut_date)
+		VALUES(groups_seq.nextval, #{name}, #{debutDate})
+		<!--  name과 dubutDate처럼 변수 처럼 사용하는 #{} 안에는
+				VO 그룹에 생성된 멤버필드 이름과 같아야한다. -->
+	</insert>
+	
+	<select id="selectList" resultType="vo.Group">
+		select group_id groupId, name, debut_date debutDate from groups
+		order by 1 desc
+	</select>
+	<select id="search" resultType="vo.Group" parameterType="vo.Group">
+		select group_id groupId, name, debut_date debutDate from groups
+		where name like #{keyword}
+	</select>
+  </mapper>
